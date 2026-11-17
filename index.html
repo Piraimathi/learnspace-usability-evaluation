@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LearnSpace | Student Learning Portal</title>
+<style>
+:root{--navy:#172554;--blue:#3157d5;--sky:#eaf0ff;--ink:#172033;--muted:#64748b;--line:#e5eaf2;--bg:#f6f8fc;--green:#16865b;--orange:#d97706}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Arial;color:var(--ink);background:var(--bg)}
+button,input{font:inherit}button{cursor:pointer}.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#fff;border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column}
+.brand{font-size:21px;font-weight:800;color:var(--navy);padding:5px 12px 28px}.brand span{color:var(--blue)}
+.navlabel{font-size:11px;color:#94a3b8;font-weight:700;letter-spacing:1.2px;padding:10px 12px}
+.nav button{width:100%;border:0;background:transparent;text-align:left;padding:12px;border-radius:10px;color:#526078;margin:2px 0;font-weight:600}
+.nav button.active,.nav button:hover{background:var(--sky);color:var(--blue)}.sidebottom{margin-top:auto;padding:14px 12px;color:var(--muted);font-size:12px}
+.main{flex:1;min-width:0}.topbar{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px}
+.search{border:1px solid var(--line);border-radius:10px;padding:10px 14px;width:min(330px,45vw);background:#fbfcff}.user{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}.avatar{width:37px;height:37px;border-radius:50%;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;font-weight:800}
+.content{max-width:1200px;margin:auto;padding:30px 34px 55px}.welcome{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:24px}.welcome h1{margin:0 0 6px;font-size:27px}.muted{color:var(--muted);font-size:14px}.primary{background:var(--blue);color:#fff;border:0;padding:11px 16px;border-radius:9px;font-weight:700}.secondary{background:#fff;border:1px solid var(--line);padding:10px 14px;border-radius:9px;color:var(--ink);font-weight:650}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.stat,.panel,.course,.task{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px}.stat small{color:var(--muted);font-weight:600}.stat strong{display:block;font-size:27px;margin:9px 0 3px}.stat .hint{font-size:12px;color:var(--green)}
+.layout{display:grid;grid-template-columns:1.55fr 1fr;gap:18px;margin-top:20px}.panel h2{font-size:17px;margin:0 0 17px}.courses{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.course{padding:0;overflow:hidden}.coursehead{height:95px;padding:17px;color:#fff;background:linear-gradient(120deg,#3157d5,#7797f6)}.course:nth-child(2) .coursehead{background:linear-gradient(120deg,#087e8b,#52bdc2)}.course:nth-child(3) .coursehead{background:linear-gradient(120deg,#6d4acb,#a28be9)}.course:nth-child(4) .coursehead{background:linear-gradient(120deg,#bd6a22,#efb36c)}.coursebody{padding:15px}.coursebody h3{font-size:15px;margin:0 0 5px}.progress{height:7px;background:#edf1f7;border-radius:20px;margin:12px 0 7px;overflow:hidden}.progress span{display:block;height:100%;background:var(--blue);border-radius:20px}.coursefoot{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}.link{border:0;background:none;color:var(--blue);font-weight:700;padding:0}
+.listrow{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--line)}.listrow:last-child{border:0}.dot{width:9px;height:9px;border-radius:50%;background:#f59e0b;margin-top:5px;flex-shrink:0}.listrow strong{font-size:13px;display:block}.listrow small{color:var(--muted)}
+.page{display:none}.page.active{display:block}.pagehead{margin-bottom:20px}.pagehead h1{margin:0 0 5px}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{text-align:left;padding:14px 10px;border-bottom:1px solid var(--line)}.table th{color:var(--muted);font-size:12px}.pill{padding:5px 9px;border-radius:30px;background:#e9f8f1;color:#13734e;font-size:11px;font-weight:700}.pill.pending{background:#fff4df;color:#9a5b00}.material{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}.material:last-child{border:0}
+.profilebox{max-width:580px}.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px}
+.toast{position:fixed;bottom:22px;right:22px;background:#172554;color:#fff;padding:13px 18px;border-radius:10px;box-shadow:0 8px 30px #17255433;display:none;z-index:5}
+.modalbg{position:fixed;inset:0;background:#0f172a88;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal{background:white;border-radius:16px;padding:25px;max-width:430px;width:100%}.modal h2{margin-top:0}.modal input{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;margin:8px 0 14px}
+footer{text-align:center;color:#94a3b8;font-size:11px;padding:20px}
+@media(max-width:900px){.sidebar{width:190px}.grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}}
+@media(max-width:620px){.sidebar{width:68px;padding:15px 8px}.brand{font-size:0;padding:8px}.brand:after{content:"L";font-size:22px}.navlabel,.nav button span,.sidebottom{display:none}.nav button{text-align:center;font-size:0}.nav button:after{content:attr(data-icon);font-size:18px}.topbar{padding:0 14px}.content{padding:22px 14px}.grid{gap:9px}.stat{padding:13px}.courses{grid-template-columns:1fr}.welcome{align-items:flex-start;flex-direction:column}}
+</style></head>
+<body>
+<div class="app">
+<aside class="sidebar"><div class="brand">Learn<span>Space</span></div><div class="navlabel">WORKSPACE</div>
+<nav class="nav">
+<button class="active" data-page="dashboard" data-icon="⌂" onclick="showPage('dashboard',this)">⌂ <span>Dashboard</span></button>
+<button data-page="courses" data-icon="▤" onclick="showPage('courses',this)">▤ <span>My Courses</span></button>
+<button data-page="materials" data-icon="▧" onclick="showPage('materials',this)">▧ <span>Study Materials</span></button>
+<button data-page="assignments" data-icon="✓" onclick="showPage('assignments',this)">✓ <span>Assignments</span></button>
+<button data-page="profile" data-icon="○" onclick="showPage('profile',this)">○ <span>My Profile</span></button>
+</nav><div class="sidebottom">LearnSpace Student Portal<br>Demo prototype · v1.0</div></aside>
+<main class="main"><header class="topbar"><input class="search" id="search" placeholder="Search courses and materials…" oninput="searchItems(this.value)"><div class="user"><div class="avatar">AR</div><span>Alex Rivera<br><small style="color:#94a3b8;font-weight:500">Student</small></span></div></header>
+<div class="content">
+<section id="dashboard" class="page active"><div class="welcome"><div><h1>Good morning, Alex 👋</h1><div class="muted">Here’s what’s happening with your learning today.</div></div><button class="primary" onclick="showPage('courses')">Explore courses</button></div>
+<div class="grid">
+<div class="stat"><small>Enrolled courses</small><strong>4</strong><div class="hint">2 in progress</div></div><div class="stat"><small>Assignments due</small><strong>3</strong><div class="hint" style="color:var(--orange)">Next due tomorrow</div></div><div class="stat"><small>Study hours</small><strong>18.5</strong><div class="hint">This month</div></div><div class="stat"><small>Overall progress</small><strong>68%</strong><div class="hint">Keep it up!</div></div></div>
+<div class="layout"><div class="panel"><h2>Continue learning</h2><div class="courses">
+<div class="course"><div class="coursehead">CS · CORE</div><div class="coursebody"><h3>Data Structures</h3><div class="muted">12 lessons · 8 completed</div><div class="progress"><span style="width:72%"></span></div><div class="coursefoot"><span>72% complete</span><button class="link" onclick="showPage('materials')">Open course →</button></div></div></div>
+<div class="course"><div class="coursehead">PROGRAMMING</div><div class="coursebody"><h3>Python Programming</h3><div class="muted">10 lessons · 6 completed</div><div class="progress"><span style="width:60%"></span></div><div class="coursefoot"><span>60% complete</span><button class="link" onclick="showPage('materials')">Open course →</button></div></div></div>
+<div class="course"><div class="coursehead">SYSTEMS</div><div class="coursebody"><h3>Operating Systems</h3><div class="muted">9 lessons · 5 completed</div><div class="progress"><span style="width:55%"></span></div><div class="coursefoot"><span>55% complete</span><button class="link" onclick="showPage('materials')">Open course →</button></div></div></div>
+<div class="course"><div class="coursehead">MATHEMATICS</div><div class="coursebody"><h3>Engineering Maths</h3><div class="muted">8 lessons · 7 completed</div><div class="progress"><span style="width:85%"></span></div><div class="coursefoot"><span>85% complete</span><button class="link" onclick="showPage('materials')">Open course →</button></div></div></div>
+</div></div><div class="panel"><h2>Upcoming deadlines</h2>
+<div class="listrow"><div class="dot"></div><div><strong>Binary Tree Assignment</strong><small>Data Structures · Tomorrow, 11:59 PM</small></div></div>
+<div class="listrow"><div class="dot" style="background:#3b82f6"></div><div><strong>Python Practice Set</strong><small>Python Programming · 22 Nov</small></div></div>
+<div class="listrow"><div class="dot" style="background:#16a34a"></div><div><strong>OS Unit Quiz</strong><small>Operating Systems · 25 Nov</small></div></div>
+<button class="secondary" style="width:100%;margin-top:14px" onclick="showPage('assignments')">View all assignments</button></div></div></section>
+<section id="courses" class="page"><div class="pagehead"><h1>My Courses</h1><div class="muted">View your enrolled courses and learning progress.</div></div><div class="courses">
+<div class="course"><div class="coursehead">CS · CORE</div><div class="coursebody"><h3>Data Structures</h3><p class="muted">Stacks, queues, trees and graphs</p><div class="progress"><span style="width:72%"></span></div><div class="coursefoot"><span>72% complete</span><button class="link" onclick="showPage('materials')">View materials →</button></div></div></div>
+<div class="course"><div class="coursehead">PROGRAMMING</div><div class="coursebody"><h3>Python Programming</h3><p class="muted">Syntax, functions and data handling</p><div class="progress"><span style="width:60%"></span></div><div class="coursefoot"><span>60% complete</span><button class="link" onclick="showPage('materials')">View materials →</button></div></div></div>
+<div class="course"><div class="coursehead">SYSTEMS</div><div class="coursebody"><h3>Operating Systems</h3><p class="muted">Processes, memory and scheduling</p><div class="progress"><span style="width:55%"></span></div><div class="coursefoot"><span>55% complete</span><button class="link" onclick="showPage('materials')">View materials →</button></div></div></div>
+<div class="course"><div class="coursehead">MATHEMATICS</div><div class="coursebody"><h3>Engineering Mathematics</h3><p class="muted">Transforms and differential equations</p><div class="progress"><span style="width:85%"></span></div><div class="coursefoot"><span>85% complete</span><button class="link" onclick="showPage('materials')">View materials →</button></div></div></div></div></section>
+<section id="materials" class="page"><div class="pagehead"><h1>Study Materials</h1><div class="muted">Find notes and learning resources for your courses.</div></div><div class="panel"><h2>Available resources</h2>
+<div class="material"><div><strong>Data Structures – Unit 3 Notes</strong><div class="muted">PDF · 2.4 MB</div></div><button class="secondary" onclick="notify('Demo resource selected: Data Structures – Unit 3 Notes')">Open resource</button></div>
+<div class="material"><div><strong>Python Programming – Functions</strong><div class="muted">PDF · 1.8 MB</div></div><button class="secondary" onclick="notify('Demo resource selected: Python Programming – Functions')">Open resource</button></div>
+<div class="material"><div><strong>Operating Systems – Unit 2 Slides</strong><div class="muted">PPT · 3.1 MB</div></div><button class="secondary" onclick="notify('Demo resource selected: Operating Systems – Unit 2 Slides')">Open resource</button></div>
+<div class="material"><div><strong>Engineering Mathematics – Formula Sheet</strong><div class="muted">PDF · 950 KB</div></div><button class="secondary" onclick="notify('Demo resource selected: Engineering Mathematics – Formula Sheet')">Open resource</button></div>
+</div></section>
+<section id="assignments" class="page"><div class="pagehead"><h1>Assignments</h1><div class="muted">Track deadlines and submission status.</div></div><div class="panel"><table class="table"><thead><tr><th>Assignment</th><th>Course</th><th>Due date</th><th>Status</th><th>Action</th></tr></thead><tbody>
+<tr><td>Binary Tree Assignment</td><td>Data Structures</td><td>Tomorrow</td><td><span class="pill pending">Pending</span></td><td><button class="link" onclick="openSubmit('Binary Tree Assignment')">Submit</button></td></tr>
+<tr><td>Python Practice Set</td><td>Python</td><td>22 Nov</td><td><span class="pill pending">Pending</span></td><td><button class="link" onclick="openSubmit('Python Practice Set')">Submit</button></td></tr>
+<tr><td>OS Unit Quiz</td><td>Operating Systems</td><td>25 Nov</td><td><span class="pill">Available</span></td><td><button class="link" onclick="notify('Quiz preview opened (demo).')">View</button></td></tr>
+<tr><td>Maths Problem Set</td><td>Engineering Maths</td><td>18 Nov</td><td><span class="pill">Submitted</span></td><td><button class="link" onclick="notify('Submission details displayed (demo).')">View</button></td></tr>
+</tbody></table></div></section>
+<section id="profile" class="page"><div class="pagehead"><h1>My Profile</h1><div class="muted">Manage your student information.</div></div><div class="panel profilebox"><div class="field"><label>Full name</label><input value="Alex Rivera"></div><div class="field"><label>Email address</label><input value="alex.rivera@example.com"></div><div class="field"><label>Student ID</label><input value="STU-2026-0142"></div><button class="primary" onclick="notify('Profile changes saved (demo).')">Save changes</button></div></section>
+<footer>LearnSpace · Student Learning Portal · Interactive demonstration prototype</footer>
+</div></main></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="modalbg" id="modal"><div class="modal"><h2 id="modalTitle">Submit assignment</h2><p class="muted">This is a demonstration interaction. No file is uploaded.</p><input type="file" id="fileInput"><div style="display:flex;gap:10px;justify-content:flex-end"><button class="secondary" onclick="closeModal()">Cancel</button><button class="primary" onclick="submitDemo()">Confirm submission</button></div></div></div>
+<script>
+function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));let b=btn||document.querySelector('[data-page="'+id+'"]');if(b)b.classList.add('active');window.scrollTo(0,0)}
+let toastTimer;function notify(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display='none',3000)}
+function openSubmit(name){document.getElementById('modalTitle').textContent=name;document.getElementById('modal').style.display='flex'}
+function closeModal(){document.getElementById('modal').style.display='none'}
+function submitDemo(){closeModal();notify('Demo only: submission confirmation displayed.')}
+function searchItems(q){if(!q.trim())return;let pages={course:'courses',material:'materials',assignment:'assignments',profile:'profile',data:'courses',python:'courses'};let k=Object.keys(pages).find(x=>q.toLowerCase().includes(x));if(k)showPage(pages[k]);}
+</script></body></html>
